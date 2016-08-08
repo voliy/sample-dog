@@ -7,6 +7,8 @@ public class Dog {
     private int id;
     private String name;
 
+    public static final String[] names = {"Cooper", "Abby", "Lucky", "Oscar", "Angel"};
+
     public Dog() {}
 
     public Dog(int id, String name) {
@@ -31,7 +33,6 @@ public class Dog {
     }
 
     public static List<Dog> samples() {
-        String[] names = {"Cooper", "Abby", "Lucky", "Oscar", "Angel"};
         List<Dog> dogs = new ArrayList<Dog>();
         for (int i = 0; i < names.length; i++) {
             dogs.add(new Dog(i + 1, names[i]));

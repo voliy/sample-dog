@@ -21,7 +21,7 @@ public class DogService {
         dogs.remove(id);
     }
 
-    private void init() {
+    public void init() {
         dogs = new LinkedHashMap<Integer, Dog>();
         for (Dog dog : Dog.samples()) {
             add(dog);
