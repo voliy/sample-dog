@@ -20,7 +20,7 @@ public class DogControllerTest extends Assert {
         given()
                 .standaloneSetup(dogController).
         when().
-                get("/dogs").
+                get("/dog").
         then().
                 contentType(ContentType.JSON).
                 statusCode(200).

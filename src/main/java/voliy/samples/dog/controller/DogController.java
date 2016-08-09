@@ -17,10 +17,16 @@ public class DogController {
         this.dogService = dogService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/dogs")
+    @RequestMapping(method = RequestMethod.GET, path = "/dog")
     @ResponseBody
     public Collection<Dog> dogs() {
         return dogService.dogs();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/dog/{id}")
+    @ResponseBody
+    public Dog dog(@PathVariable int id) {
+        return dogService.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/dog")
