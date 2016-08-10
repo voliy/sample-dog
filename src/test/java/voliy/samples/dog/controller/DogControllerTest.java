@@ -1,7 +1,6 @@
 package voliy.samples.dog.controller;
 
 import com.jayway.restassured.http.ContentType;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import voliy.samples.dog.model.Dog;
 import voliy.samples.dog.service.DogService;
@@ -9,13 +8,12 @@ import voliy.samples.dog.service.DogService;
 import static com.jayway.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
-public class DogControllerTest extends Assert {
+public class DogControllerTest {
     @Test
     public void mustContainDogs() {
-        DogController dogController = new DogController();
         DogService dogService = new DogService();
         dogService.init();
-        dogController.setDogService(dogService);
+        DogController dogController = new DogController(dogService);
 
         given()
                 .standaloneSetup(dogController).

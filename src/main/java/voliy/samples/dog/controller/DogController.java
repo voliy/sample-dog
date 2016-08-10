@@ -1,6 +1,5 @@
 package voliy.samples.dog.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import voliy.samples.dog.model.Dog;
@@ -12,8 +11,7 @@ import java.util.Collection;
 public class DogController {
     private DogService dogService;
 
-    @Autowired
-    public void setDogService(DogService dogService) {
+    DogController(DogService dogService) {
         this.dogService = dogService;
     }
 
