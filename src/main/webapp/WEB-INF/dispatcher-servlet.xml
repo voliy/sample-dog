@@ -11,5 +11,8 @@
     <bean name="dogController" class="voliy.samples.dog.controller.DogController">
         <constructor-arg ref="dogService"/>
     </bean>
-    <bean name="dogService" class="voliy.samples.dog.service.DogService" init-method="init"/>
+    <bean name="dogService" class="voliy.samples.dog.service.DogService">
+        <constructor-arg ref="dogDao"/>
+    </bean>
+    <bean name="dogDao" class="voliy.samples.dog.dao.DogDao" init-method="init"/>
 </beans>
