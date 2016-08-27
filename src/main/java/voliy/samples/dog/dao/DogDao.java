@@ -3,12 +3,13 @@ package voliy.samples.dog.dao;
 import voliy.samples.dog.model.Dog;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DogDao {
-    private volatile int nextId;
-    private Map<Integer, Dog> dogs = new LinkedHashMap<>();
+    private AtomicInteger nextId = new AtomicInteger(0);
+    private Map<Integer, Dog> dogs = new ConcurrentHashMap<>();
 
     public Collection<Dog> dogs() {
         return dogs.values();
@@ -24,7 +25,7 @@ public class DogDao {
 
     public void add(Dog dog) {
         if (dog.getId() == null) {
-            dog.setId(++nextId);
+            dog.setId(nextId.incrementAndGet());
             dogs.put(dog.getId(), dog);
         }
     }
