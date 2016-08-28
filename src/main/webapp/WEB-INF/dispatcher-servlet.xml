@@ -14,5 +14,10 @@
     <bean name="dogService" class="voliy.samples.dog.service.DogService">
         <constructor-arg ref="dogDao"/>
     </bean>
-    <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoInMemory" init-method="init"/>
+    <beans profile="inMemory">
+        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoInMemory" init-method="init"/>
+    </beans>
+    <beans profile="hibernate">
+        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoHibernate" init-method="init"/>
+    </beans>
 </beans>
