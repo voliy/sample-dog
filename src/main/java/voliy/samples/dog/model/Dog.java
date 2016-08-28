@@ -11,22 +11,22 @@ public class Dog {
     private Integer id;
     private String name;
     private Date birthDate;
-    private double height;
-    private double weight;
+    private Double height;
+    private Double weight;
 
     public static final String[] names = {"Cooper", "Abby", "Lucky", "Oscar", "Angel"};
 
     private static final Dog[] SAMPLE_DOGS = {
-            new Dog(names[0], prepareDate(2014, Month.JANUARY, 5), 55, 10),
-            new Dog(names[1], prepareDate(2014, Month.JUNE, 12), 45, 12),
-            new Dog(names[2], prepareDate(2014, Month.NOVEMBER, 23), 40, 8),
-            new Dog(names[3], prepareDate(2015, Month.MAY, 17), 25, 5),
-            new Dog(names[4], prepareDate(2016, Month.MARCH, 15), 20, 3)
+            new Dog(names[0], prepareDate(2014, Month.JANUARY, 5), 55.0, 10.0),
+            new Dog(names[1], prepareDate(2014, Month.JUNE, 12), 45.0, 12.0),
+            new Dog(names[2], prepareDate(2014, Month.NOVEMBER, 23), 40.0, 8.0),
+            new Dog(names[3], prepareDate(2015, Month.MAY, 17), 25.0, 5.0),
+            new Dog(names[4], prepareDate(2016, Month.MARCH, 15), 20.0, 3.0)
     };
 
     public Dog() {}
 
-    public Dog(String name, Date birthDate, double height, double weight) {
+    public Dog(String name, Date birthDate, Double height, Double weight) {
         this.name = name;
         this.birthDate = birthDate;
         this.height = height;
@@ -57,19 +57,19 @@ public class Dog {
         this.birthDate = birthDate;
     }
 
-    public double getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 

@@ -30,6 +30,25 @@ public class DogDao {
         }
     }
 
+    public void update(Dog dog) {
+        Integer dogId = dog.getId();
+        if (dogId != null) {
+            Dog dogInStore = dogs.get(dogId);
+            if (dog.getName() != null) {
+                dogInStore.setName(dog.getName());
+            }
+            if (dog.getBirthDate() != null) {
+                dogInStore.setBirthDate(dog.getBirthDate());
+            }
+            if (dog.getHeight() != null) {
+                dogInStore.setHeight(dog.getHeight());
+            }
+            if (dog.getWeight() != null) {
+                dogInStore.setWeight(dog.getWeight());
+            }
+        }
+    }
+
     public void delete(int id) {
         dogs.remove(id);
     }

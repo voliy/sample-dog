@@ -39,7 +39,7 @@ public class DogControllerMockTest {
     @Test
     public void shouldAddDogToStorage() {
         String expectedName = "Test Dog";
-        addDog(new Dog(expectedName, null, 1, 1));
+        addDog(new Dog(expectedName, null, 1.0, 1.0));
         dogs().contentType(ContentType.JSON).statusCode(200).body("name", hasItems(expectedName));
     }
 

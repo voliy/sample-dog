@@ -38,7 +38,7 @@ public class DogDaoTest {
     @Test
     public void shouldAddDogToStorage() {
         String expectedName = "Test Dog";
-        dogDao.add(new Dog(expectedName, null, 1, 1));
+        dogDao.add(new Dog(expectedName, null, 1.0, 1.0));
         Collection<String> actualNames = dogNames();
         assertThat(actualNames, hasItems(expectedName));
     }

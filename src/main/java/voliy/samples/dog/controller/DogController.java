@@ -29,6 +29,11 @@ public class DogController {
         dogService.add(dog);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, path = "/dog")
+    public void updateDog(@RequestBody Dog dog) {
+        dogService.update(dog);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, path = "/dog/{id}")
     public void deleteDog(@PathVariable int id) {
         dogService.delete(id);

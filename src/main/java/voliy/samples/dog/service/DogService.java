@@ -24,6 +24,10 @@ public class DogService {
         dogDao.add(dog);
     }
 
+    public void update(Dog dog) {
+        dogDao.update(dog);
+    }
+
     public void delete(int id) {
         dogDao.delete(id);
     }
