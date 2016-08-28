@@ -6,6 +6,7 @@ import com.jayway.restassured.module.mockmvc.specification.MockMvcRequestSpecifi
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import voliy.samples.dog.dao.DogDao;
+import voliy.samples.dog.dao.DogDaoInMemory;
 import voliy.samples.dog.model.Dog;
 import voliy.samples.dog.service.DogService;
 
@@ -21,7 +22,7 @@ public class DogControllerMockTest {
 
     @BeforeMethod
     private void init() {
-        DogDao dogDao = new DogDao();
+        DogDao dogDao = new DogDaoInMemory();
         dogDao.init();
         dogController = new DogController(new DogService(dogDao));
     }

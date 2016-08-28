@@ -15,7 +15,7 @@ public class DogDaoTest {
 
     @BeforeMethod
     private void init() {
-        dogDao = new DogDao();
+        dogDao = new DogDaoInMemory();
         dogDao.init();
     }
 
