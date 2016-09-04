@@ -37,20 +37,11 @@ public class DogDaoInMemory implements DogDao {
     @Override
     public void update(Dog dog) {
         Integer dogId = dog.getId();
+        if (!dogs.containsKey(dogId)) {
+            throw new IllegalArgumentException("There is no dog with id = " + dogId);
+        }
         if (dogId != null) {
-            Dog dogInStore = dogs.get(dogId);
-            if (dog.getName() != null) {
-                dogInStore.setName(dog.getName());
-            }
-            if (dog.getBirthDate() != null) {
-                dogInStore.setBirthDate(dog.getBirthDate());
-            }
-            if (dog.getHeight() != null) {
-                dogInStore.setHeight(dog.getHeight());
-            }
-            if (dog.getWeight() != null) {
-                dogInStore.setWeight(dog.getWeight());
-            }
+            dogs.put(dogId, dog);
         }
     }
 
