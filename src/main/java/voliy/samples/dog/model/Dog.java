@@ -1,9 +1,5 @@
 package voliy.samples.dog.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
@@ -11,11 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table
 public class Dog {
-    @Id
-    @GeneratedValue
     private Integer id;
     private String name;
     private Date birthDate;

@@ -1,8 +1,8 @@
 package voliy.samples.dog.dao;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import voliy.samples.dog.model.Dog;
@@ -11,6 +11,11 @@ import java.util.Collection;
 
 public class DogDaoHibernate implements DogDao {
     private Session session;
+    private SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Collection<Dog> dogs() {
@@ -19,7 +24,9 @@ public class DogDaoHibernate implements DogDao {
 
     @Override
     public void init() {
-        session = new Configuration().configure().buildSessionFactory().openSession();
+        // todo
+//        session = sessionFactory.getCurrentSession();
+        session = sessionFactory.openSession();
         Dog.samples().forEach(this::add);
     }
 
