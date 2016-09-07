@@ -7,8 +7,6 @@ import java.util.Collection;
 public interface DogDao {
     Collection<Dog> dogs();
 
-    void init();
-
     Dog get(int id);
 
     void add(Dog dog);

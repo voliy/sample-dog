@@ -17,11 +17,6 @@ public class DogDaoInMemory implements DogDao {
     }
 
     @Override
-    public void init() {
-        Dog.samples().forEach(this::add);
-    }
-
-    @Override
     public Dog get(int id) {
         return dogs.get(id);
     }

@@ -23,8 +23,9 @@ public class DogControllerMockTest {
     @BeforeMethod
     private void init() {
         DogDao dogDao = new DogDaoInMemory();
-        dogDao.init();
-        dogController = new DogController(new DogService(dogDao));
+        DogService dogService = new DogService(dogDao);
+        dogService.init();
+        dogController = new DogController(dogService);
     }
 
     @Test

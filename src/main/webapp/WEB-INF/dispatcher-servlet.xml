@@ -16,14 +16,14 @@
     <bean name="dogController" class="voliy.samples.dog.controller.DogController">
         <constructor-arg ref="dogService"/>
     </bean>
-    <bean name="dogService" class="voliy.samples.dog.service.DogService">
+    <bean name="dogService" class="voliy.samples.dog.service.DogService" init-method="init">
         <constructor-arg ref="dogDao"/>
     </bean>
     <beans profile="inMemory">
-        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoInMemory" init-method="init"/>
+        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoInMemory"/>
     </beans>
     <beans profile="hibernate">
-        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoHibernate" init-method="init">
+        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoHibernate">
             <property name="sessionFactory" ref="sessionFactory"/>
         </bean>
 
@@ -61,7 +61,7 @@
             </property>
         </bean>
 
-        <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
             <property name="sessionFactory" ref="sessionFactory" />
         </bean>
     </beans>
