@@ -5,12 +5,12 @@
 
 <hibernate-mapping>
     <class name="voliy.samples.dog.model.Dog" table="DOG">
-        <meta attribute="class-description">
-            This class contains the dog detail.
-        </meta>
         <id name="id" type="int" column="id">
             <generator class="native"/>
         </id>
         <property name="name" column="name" type="string"/>
+        <property name="birthDate" column="birthDate" type="date"/>
+        <property name="height" column="height" type="double"/>
+        <property name="weight" column="weight" type="double"/>
     </class>
 </hibernate-mapping>
