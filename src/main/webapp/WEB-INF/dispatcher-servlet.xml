@@ -11,58 +11,55 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
     <bean name="dogController" class="voliy.samples.dog.controller.DogController">
         <constructor-arg ref="dogService"/>
     </bean>
-    <bean name="dogService" class="voliy.samples.dog.service.DogService" init-method="init">
+
+    <bean name="dogService" class="voliy.samples.dog.service.DogService">
         <constructor-arg ref="dogDao"/>
     </bean>
-    <beans profile="inMemory">
-        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoInMemory"/>
-    </beans>
-    <beans profile="hibernate">
-        <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoHibernate">
-            <property name="sessionFactory" ref="sessionFactory"/>
-        </bean>
 
-        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="driverClassName" value="org.h2.Driver"/>
-            <property name="url" value="jdbc:h2:mem:foo;DB_CLOSE_DELAY=-1"/>
-            <property name="username" value="user"/>
-            <property name="password" value="password"/>
-        </bean>
+    <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoHibernate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
-        <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-            <property name="dataSource" ref="dataSource"/>
-            <property name="mappingResources">
-                <list>
-                    <value>hbm.xml</value>
-                </list>
-            </property>
-            <property name="hibernateProperties">
-                <props>
-                    <prop key="hibernate.default_schema">PUBLIC</prop>
-                    <!-- JDBC connection pool (use the built-in) -->
-                    <prop key="hibernate.connection.pool_size">1</prop>
-                    <!-- SQL dialect -->
-                    <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-                    <!-- Echo all executed SQL to stdout -->
-                    <prop key="hibernate.show_sql">true</prop>
-                    <!-- Drop and re-create the database schema on startup -->
-                    <prop key="hibernate.hbm2ddl.auto">create</prop>
-                </props>
-            </property>
-            <property name="annotatedClasses">
-                <list>
-                    <value>voliy.samples.dog.model.Dog</value>
-                </list>
-            </property>
-        </bean>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:foo;DB_CLOSE_DELAY=-1"/>
+        <property name="username" value="user"/>
+        <property name="password" value="password"/>
+    </bean>
 
-        <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-            <property name="sessionFactory" ref="sessionFactory" />
-        </bean>
-    </beans>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.default_schema">PUBLIC</prop>
+                <!-- JDBC connection pool (use the built-in) -->
+                <prop key="hibernate.connection.pool_size">1</prop>
+                <!-- SQL dialect -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <!-- Echo all executed SQL to stdout -->
+                <prop key="hibernate.show_sql">true</prop>
+                <!-- Drop and re-create the database schema on startup -->
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>voliy.samples.dog.model.Dog</value>
+            </list>
+        </property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 </beans>

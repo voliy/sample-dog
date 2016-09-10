@@ -5,7 +5,6 @@ import voliy.samples.dog.dao.DogDao;
 import voliy.samples.dog.model.Dog;
 
 import java.util.Collection;
-import java.util.List;
 
 public class DogService {
     private DogDao dogDao;
@@ -14,14 +13,12 @@ public class DogService {
         this.dogDao = dogDao;
     }
 
-    public void init() {
-        add(Dog.samples());
-    }
-
+    @Transactional
     public Collection<Dog> dogs() {
         return dogDao.dogs();
     }
 
+    @Transactional
     public Dog get(int id) {
         return dogDao.get(id);
     }
@@ -29,13 +26,6 @@ public class DogService {
     @Transactional
     public void add(Dog dog) {
         dogDao.add(dog);
-    }
-
-    @Transactional
-    private void add(List<Dog> dogs) {
-        for (Dog dog : dogs) {
-            dogDao.add(dog);
-        }
     }
 
     public void update(Dog dog) {
