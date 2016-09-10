@@ -13,26 +13,25 @@ public class DogService {
         this.dogDao = dogDao;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<Dog> dogs() {
         return dogDao.dogs();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Dog get(int id) {
         return dogDao.get(id);
     }
 
-    @Transactional
-    public void add(Dog dog) {
+    @Transactional public void add(Dog dog) {
         dogDao.add(dog);
     }
 
-    public void update(Dog dog) {
+    @Transactional public void update(Dog dog) {
         dogDao.update(dog);
     }
 
-    public void delete(int id) {
+    @Transactional public void delete(int id) {
         dogDao.delete(id);
     }
 }
