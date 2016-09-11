@@ -14,14 +14,8 @@
         <targetJdk>1.8</targetJdk>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.3</maven.compiler.version>
-
         <spring.version>4.3.2.RELEASE</spring.version>
-        <jackson.version>2.8.1</jackson.version>
-        <hibernate.version>5.2.2.Final</hibernate.version>
-        <h2.version>1.4.192</h2.version>
-        <testng.version>6.8</testng.version>
         <rest-assured.version>2.9.0</rest-assured.version>
-        <servletapi.version>3.1.0</servletapi.version>
     </properties>
 
     <dependencies>
@@ -45,10 +39,19 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.qala.datagen</groupId>
+            <artifactId>qala-datagen</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.unitils</groupId>
+            <artifactId>unitils-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -85,23 +88,33 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
+                <version>2.8.1</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
-                <version>${hibernate.version}</version>
+                <version>5.2.2.Final</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
+                <version>1.4.192</version>
+            </dependency>
+            <dependency>
+                <groupId>io.qala.datagen</groupId>
+                <artifactId>qala-datagen</artifactId>
+                <version>1.7.1</version>
             </dependency>
 
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
+                <version>6.8</version>
+            </dependency>
+            <dependency>
+                <groupId>org.unitils</groupId>
+                <artifactId>unitils-core</artifactId>
+                <version>3.4.3</version>
             </dependency>
             <dependency>
                 <groupId>com.jayway.restassured</groupId>
@@ -117,7 +130,7 @@
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
-                <version>${servletapi.version}</version>
+                <version>3.1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

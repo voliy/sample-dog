@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static io.qala.datagen.RandomShortApi.*;
+import static voliy.samples.dog.util.DogUtils.positiveDouble;
+
 public class Dog {
     private Integer id;
     private String name;
@@ -79,6 +82,15 @@ public class Dog {
             dogs.add(prepareDogFromSample(sampleDog));
         }
         return dogs;
+    }
+
+    public static Dog random() {
+        Dog dog = new Dog();
+        dog.setName(alphanumeric(10));
+        dog.setBirthDate(prepareDate(integer(2010, 2016), sample(Month.values()), integer(1, 31)));
+        dog.setHeight(positiveDouble());
+        dog.setWeight(positiveDouble());
+        return dog;
     }
 
     private static Date prepareDate(int year, Month month, int dayOfMonth) {
