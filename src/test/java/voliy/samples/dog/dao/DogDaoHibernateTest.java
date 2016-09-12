@@ -7,6 +7,7 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.testng.annotations.Test;
 import voliy.samples.dog.model.Dog;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
@@ -28,8 +29,26 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
         dogDao.add(expected);
         Integer dogId = expected.getId();
         assertNotNull(dogId);
-        sessionFactory.getCurrentSession().clear();
-        Dog actual = dogDao.get(dogId);
+        Dog actual = loadDog(dogId);
         assertReflectionEquals(expected, actual);
+    }
+
+    @Test
+    public void updateNameOfDog() throws Exception {
+        Dog dog = Dog.random();
+        dog.setName("Cooper");
+        dogDao.add(dog);
+        Dog actual = loadDog(dog.getId());
+        assertEquals("Cooper", actual.getName());
+        dog.setName("Oscar");
+        sessionFactory.getCurrentSession().clear();
+        dogDao.update(dog);
+        actual = loadDog(dog.getId());
+        assertEquals("Oscar", actual.getName());
+    }
+
+    private Dog loadDog(Integer dogId) {
+        sessionFactory.getCurrentSession().clear();
+        return dogDao.get(dogId);
     }
 }

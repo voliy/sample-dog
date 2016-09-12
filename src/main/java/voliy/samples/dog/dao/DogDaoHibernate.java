@@ -22,9 +22,7 @@ public class DogDaoHibernate implements DogDao {
     }
 
     @Override public Dog get(int id) {
-        Query query = getSession().createQuery("from Dog where id = :id");
-        query.setParameter("id", id);
-        return (Dog) query.list().get(0);
+        return (Dog) getSession().createQuery("from Dog where id = :id").setParameter("id", id).list().get(0);
     }
 
     @Override public void add(Dog dog) {
@@ -32,7 +30,8 @@ public class DogDaoHibernate implements DogDao {
     }
 
     @Override public void update(Dog dog) {
-        throw new NotImplementedException(); // TODO
+        getSession().createQuery("update Dog set name = :name where id.id = :id").setParameter("id", dog.getId())
+                .setParameter("name", dog.getName()).executeUpdate();
     }
 
     @Override public void delete(int id) {
