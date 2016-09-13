@@ -87,7 +87,8 @@ public class Dog {
     public static Dog random() {
         Dog dog = new Dog();
         dog.setName(alphanumeric(10));
-        dog.setBirthDate(prepareDate(integer(2010, 2016), sample(Month.values()), integer(1, 31)));
+        // todo: sometimes fails if day is from (1, 31) range
+        dog.setBirthDate(prepareDate(integer(2010, 2016), sample(Month.values()), integer(1, 28)));
         dog.setHeight(positiveDouble());
         dog.setWeight(positiveDouble());
         return dog;

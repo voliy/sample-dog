@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
-public class DogDaoTest {
+public class DogDaoInMemoryTest {
     private DogDao dogDao;
 
     @BeforeMethod

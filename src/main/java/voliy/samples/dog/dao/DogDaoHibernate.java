@@ -2,12 +2,12 @@ package voliy.samples.dog.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Required;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.springframework.util.CollectionUtils;
 import voliy.samples.dog.model.Dog;
 
 import java.util.Collection;
+import java.util.List;
 
 public class DogDaoHibernate implements DogDao {
     private SessionFactory sessionFactory;
@@ -17,12 +17,14 @@ public class DogDaoHibernate implements DogDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override public Collection<Dog> dogs() {
+    @Override @SuppressWarnings("unchecked")
+    public Collection<Dog> dogs() {
         return getSession().createQuery("from Dog").list();
     }
 
     @Override public Dog get(int id) {
-        return (Dog) getSession().createQuery("from Dog where id = :id").setParameter("id", id).list().get(0);
+        List dogs = getSession().createQuery("from Dog where id = :id").setParameter("id", id).list();
+        return !CollectionUtils.isEmpty(dogs) ? (Dog) dogs.get(0) : null;
     }
 
     @Override public void add(Dog dog) {
@@ -30,12 +32,18 @@ public class DogDaoHibernate implements DogDao {
     }
 
     @Override public void update(Dog dog) {
-        getSession().createQuery("update Dog set name = :name where id.id = :id").setParameter("id", dog.getId())
-                .setParameter("name", dog.getName()).executeUpdate();
+        getSession().createQuery("update Dog set name = :name, birthDate = :birthDate, height = :height, " +
+                "weight = :weight where id = :id")
+                .setParameter("id", dog.getId())
+                .setParameter("birthDate", dog.getBirthDate())
+                .setParameter("name", dog.getName())
+                .setParameter("height", dog.getHeight())
+                .setParameter("weight", dog.getWeight())
+                .executeUpdate();
     }
 
     @Override public void delete(int id) {
-        throw new NotImplementedException(); // TODO
+        getSession().createQuery("delete Dog where id = :id").setParameter("id", id).executeUpdate();
     }
 
     private Session getSession() {
