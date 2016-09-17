@@ -4,10 +4,8 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
-    <!--<context:annotation-config/> todo: why don't need it? -->
-
     <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoHibernate">
-        <property name="sessionFactory" ref="sessionFactory"/>
+        <constructor-arg ref="sessionFactory"/>
     </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

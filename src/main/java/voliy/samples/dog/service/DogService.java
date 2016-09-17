@@ -7,7 +7,7 @@ import voliy.samples.dog.model.Dog;
 import java.util.Collection;
 
 public class DogService {
-    private DogDao dogDao;
+    private final DogDao dogDao;
 
     public DogService(DogDao dogDao) {
         this.dogDao = dogDao;

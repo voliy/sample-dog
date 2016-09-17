@@ -8,7 +8,7 @@ import java.util.Collection;
 
 @RestController
 public class DogController {
-    private DogService dogService;
+    private final DogService dogService;
 
     DogController(DogService dogService) {
         this.dogService = dogService;

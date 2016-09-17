@@ -2,7 +2,6 @@ package voliy.samples.dog.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.CollectionUtils;
 import voliy.samples.dog.model.Dog;
 
@@ -10,10 +9,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class DogDaoHibernate implements DogDao {
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    @Required // todo: why didn't happen BeanInitializationException?
-    public void setSessionFactory(SessionFactory sessionFactory) {
+    public DogDaoHibernate(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
