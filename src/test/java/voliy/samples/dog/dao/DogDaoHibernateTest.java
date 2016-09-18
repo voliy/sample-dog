@@ -41,8 +41,7 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
         assertNull(dog);
     }
 
-    @Test
-    public void addsDogsAndLoadsAllOfThem() {
+    @Test public void addsDogsAndLoadsAllOfThem() {
         Dog firstDog = addDog(Dog.random());
         Dog secondDog = addDog(Dog.random());
         Collection<Dog> allDogs = loadAllDogs();

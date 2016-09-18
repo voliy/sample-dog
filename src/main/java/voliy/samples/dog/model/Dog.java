@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static io.qala.datagen.RandomShortApi.*;
+import static io.qala.datagen.RandomShortApi.alphanumeric;
+import static io.qala.datagen.RandomShortApi.positiveLong;
 import static voliy.samples.dog.util.DogUtils.positiveDouble;
 
 public class Dog {
@@ -87,8 +88,7 @@ public class Dog {
     public static Dog random() {
         Dog dog = new Dog();
         dog.setName(alphanumeric(10));
-        // todo: sometimes fails if day is from (1, 31) range
-        dog.setBirthDate(prepareDate(integer(2010, 2016), sample(Month.values()), integer(1, 28)));
+        dog.setBirthDate(new Date(positiveLong()));
         dog.setHeight(positiveDouble());
         dog.setWeight(positiveDouble());
         return dog;

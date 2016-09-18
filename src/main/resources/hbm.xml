@@ -9,7 +9,7 @@
             <generator class="native"/>
         </id>
         <property name="name" column="name" type="string"/>
-        <property name="birthDate" column="birthDate" type="date"/>
+        <property name="birthDate" column="birthDate" type="timestamp"/>
         <property name="height" column="height" type="double"/>
         <property name="weight" column="weight" type="double"/>
     </class>
