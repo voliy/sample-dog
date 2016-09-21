@@ -4,8 +4,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 import voliy.samples.dog.model.Dog;
+
+import javax.persistence.FlushModeType;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
@@ -31,9 +34,12 @@ public class FlushModeExamples extends AbstractTransactionalTestNGSpringContextT
     Deprecated. use MANUAL instead.
     */
 
-    @Test public void testFlushMode() throws Exception {
+    @Test @Transactional
+    public void testFlushMode() throws Exception {
+//        sessionFactory.getCurrentSession().setFlushMode(FlushMode.COMMIT);
+        sessionFactory.getCurrentSession().setFlushMode(FlushModeType.COMMIT);
         Dog expected = addDog(Dog.random());
-        flushAndClear();
+        clear();
 
         Dog actual = loadDog(expected.getId());
         assertReflectionEquals(expected, actual);
@@ -45,11 +51,14 @@ public class FlushModeExamples extends AbstractTransactionalTestNGSpringContextT
     }
 
     private Dog loadDog(Integer id) {
-        return dogDao.get(id);
+        return dogDao.load(id);
     }
 
-    private void flushAndClear() {
+    private void flush() {
         sessionFactory.getCurrentSession().flush();
+    }
+
+    private void clear() {
         sessionFactory.getCurrentSession().clear();
     }
 }

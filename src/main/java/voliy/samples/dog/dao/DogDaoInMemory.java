@@ -1,5 +1,6 @@
 package voliy.samples.dog.dao;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import voliy.samples.dog.model.Dog;
 
 import java.util.Collection;
@@ -19,6 +20,11 @@ public class DogDaoInMemory implements DogDao {
     @Override
     public Dog get(int id) {
         return dogs.get(id);
+    }
+
+    @Override
+    public Dog load(int id) {
+        throw new NotImplementedException();
     }
 
     @Override

@@ -35,7 +35,9 @@ public class DogControllerMockTest extends AbstractTransactionalTestNGSpringCont
 
     @Test public void savesAndLoadsDog() throws Exception {
         Dog expected = addDog(Dog.random());
-        Dog actual = loadDog(expected.getId());
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
         assertReflectionEquals(expected, actual);
     }
 
@@ -49,7 +51,7 @@ public class DogControllerMockTest extends AbstractTransactionalTestNGSpringCont
         updateDog(expected);
         flushAndClear();
 
-        Dog actual = loadDog(dogId);
+        Dog actual = getDog(dogId);
         assertReflectionEquals(expected, actual);
     }
 
@@ -61,7 +63,7 @@ public class DogControllerMockTest extends AbstractTransactionalTestNGSpringCont
         deleteDog(dogId);
         flushAndClear();
 
-        dog = loadDog(dogId);
+        dog = getDog(dogId);
         assertNull(dog);
     }
 
@@ -81,7 +83,7 @@ public class DogControllerMockTest extends AbstractTransactionalTestNGSpringCont
         return objectMapper.readValue(response, Dog.class);
     }
 
-    private Dog loadDog(int id) throws Exception {
+    private Dog getDog(int id) throws Exception {
         String response = setup().when().get(BASE_URL + "/" + id).andReturn().getMvcResult().getResponse()
                 .getContentAsString();
         if (StringUtils.isEmpty(response)) return null;

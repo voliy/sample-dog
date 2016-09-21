@@ -22,6 +22,11 @@ public class DogDaoHibernate implements DogDao {
         return getSession().get(Dog.class, id);
     }
 
+    @Override
+    public Dog load(int id) {
+        return getSession().load(Dog.class, id);
+    }
+
     @Override public Dog add(Dog dog) {
         getSession().persist(dog);
         return dog;
