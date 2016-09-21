@@ -1,5 +1,7 @@
 package voliy.samples.dog.dao;
 
+import org.hibernate.FlushMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,13 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 import voliy.samples.dog.model.Dog;
 
-import javax.persistence.FlushModeType;
-
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 @ContextConfiguration(locations = {"classpath:dao-context.xml"})
 public class FlushModeExamples extends AbstractTransactionalTestNGSpringContextTests {
-    @Autowired private DogDao dogDao;
     @Autowired private SessionFactory sessionFactory;
 
     /*
@@ -36,29 +35,30 @@ public class FlushModeExamples extends AbstractTransactionalTestNGSpringContextT
 
     @Test @Transactional
     public void testFlushMode() throws Exception {
-//        sessionFactory.getCurrentSession().setFlushMode(FlushMode.COMMIT);
-        sessionFactory.getCurrentSession().setFlushMode(FlushModeType.COMMIT);
-        Dog expected = addDog(Dog.random());
-        clear();
+//        session().setFlushMode(FlushModeType.COMMIT);
+        session().setFlushMode(FlushMode.MANUAL);
 
-        Dog actual = loadDog(expected.getId());
+        Dog expected = Dog.random();
+        session().persist(expected);
+
+        session().clear();
+
+        Dog actual = session().load(Dog.class, expected.getId());
+        assertReflectionEquals(expected, actual);
+
+        session().clear();
+
+        Dog newDog = Dog.random();
+        newDog.setId(expected.getId());
+        session().update(newDog);
+
+        session().clear();
+
+        actual = session().load(Dog.class, expected.getId());
         assertReflectionEquals(expected, actual);
     }
 
-    private Dog addDog(Dog dog) {
-        dogDao.add(dog);
-        return dog;
-    }
-
-    private Dog loadDog(Integer id) {
-        return dogDao.load(id);
-    }
-
-    private void flush() {
-        sessionFactory.getCurrentSession().flush();
-    }
-
-    private void clear() {
-        sessionFactory.getCurrentSession().clear();
+    private Session session() {
+        return sessionFactory.getCurrentSession();
     }
 }
