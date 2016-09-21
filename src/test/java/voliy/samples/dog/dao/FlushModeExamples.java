@@ -12,50 +12,38 @@ import voliy.samples.dog.model.Dog;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
+// todo: see http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#flushing
+
 @ContextConfiguration(locations = {"classpath:dao-context.xml"})
 public class FlushModeExamples extends AbstractTransactionalTestNGSpringContextTests {
     @Autowired private SessionFactory sessionFactory;
 
-    /*
-    ALWAYS
-    The Session is flushed before every query.
-
-    AUTO
-    The Session is sometimes flushed before query execution in order to ensure that queries never return stale state.
-
-    COMMIT
-    The Session is flushed when Transaction.commit() is called.
-
-    MANUAL
-    The Session is only ever flushed when Session.flush() is explicitly called by the application.
-
-    NEVER
-    Deprecated. use MANUAL instead.
-    */
-
     @Test @Transactional
     public void testFlushMode() throws Exception {
-//        session().setFlushMode(FlushModeType.COMMIT);
         session().setFlushMode(FlushMode.MANUAL);
 
+        System.out.println("Step 1: persist dog");
         Dog expected = Dog.random();
         session().persist(expected);
 
+        System.out.println("Step 2: clear session and load dog");
         session().clear();
-
         Dog actual = session().load(Dog.class, expected.getId());
         assertReflectionEquals(expected, actual);
 
+        System.out.println("Step 3: clear session and update dog");
         session().clear();
-
         Dog newDog = Dog.random();
         newDog.setId(expected.getId());
         session().update(newDog);
 
-        session().clear();
+        System.out.println("Step 4: flush");
+        session().flush();
 
+        System.out.println("Step 5: clear session and load dog");
+        session().clear();
         actual = session().load(Dog.class, expected.getId());
-        assertReflectionEquals(expected, actual);
+        assertReflectionEquals(newDog, actual);
     }
 
     private Session session() {
