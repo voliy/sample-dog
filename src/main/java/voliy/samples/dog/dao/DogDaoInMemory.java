@@ -22,11 +22,12 @@ public class DogDaoInMemory implements DogDao {
     }
 
     @Override
-    public void add(Dog dog) {
+    public Dog add(Dog dog) {
         if (dog.getId() == null) {
             dog.setId(nextId.incrementAndGet());
             dogs.put(dog.getId(), dog);
         }
+        return dog;
     }
 
     @Override

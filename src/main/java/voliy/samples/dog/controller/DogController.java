@@ -25,8 +25,8 @@ public class DogController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/dog")
-    public void addDog(@RequestBody Dog dog) {
-        dogService.add(dog);
+    public Dog addDog(@RequestBody Dog dog) {
+        return dogService.add(dog);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/dog")

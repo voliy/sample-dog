@@ -23,8 +23,8 @@ public class DogService {
         return dogDao.get(id);
     }
 
-    @Transactional public void add(Dog dog) {
-        dogDao.add(dog);
+    @Transactional public Dog add(Dog dog) {
+        return dogDao.add(dog);
     }
 
     @Transactional public void update(Dog dog) {

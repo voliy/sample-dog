@@ -22,6 +22,7 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
     @Test public void savesAndLoadsDog() {
         Dog expected = addDog(Dog.random());
         flushAndClear();
+
         Dog actual = loadDog(expected.getId());
         assertReflectionEquals(expected, actual);
     }
@@ -29,11 +30,13 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
     @Test public void addsDogAndUpdatesItsFields() {
         Dog expected = addDog(Dog.random());
         flushAndClear();
+
         int dogId = expected.getId();
         expected = Dog.random();
         expected.setId(dogId);
         updateDog(expected);
         flushAndClear();
+
         Dog actual = loadDog(dogId);
         assertReflectionEquals(expected, actual);
     }
@@ -41,9 +44,11 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
     @Test public void savesAndDeletesDog() {
         Dog dog = addDog(Dog.random());
         flushAndClear();
+
         int dogId = dog.getId();
         deleteDog(dogId);
         flushAndClear();
+
         dog = loadDog(dogId);
         assertNull(dog);
     }
@@ -52,6 +57,7 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
         Dog firstDog = addDog(Dog.random());
         Dog secondDog = addDog(Dog.random());
         flushAndClear();
+
         Collection<Dog> allDogs = loadAllDogs();
         assertReflectionEquals(Arrays.asList(secondDog, firstDog), allDogs, LENIENT_ORDER);
     }

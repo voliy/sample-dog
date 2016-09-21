@@ -9,7 +9,7 @@ public interface DogDao {
 
     Dog get(int id);
 
-    void add(Dog dog);
+    Dog add(Dog dog);
 
     void update(Dog dog);
 
