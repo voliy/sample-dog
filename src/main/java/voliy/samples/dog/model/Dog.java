@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static io.qala.datagen.RandomShortApi.alphanumeric;
-import static io.qala.datagen.RandomShortApi.positiveLong;
-import static voliy.samples.dog.util.DogUtils.positiveDouble;
+import static io.qala.datagen.RandomShortApi.*;
 
 public class Dog {
     private Integer id;
