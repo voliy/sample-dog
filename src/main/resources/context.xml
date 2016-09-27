@@ -4,6 +4,14 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+    <bean name="dogController" class="voliy.samples.dog.controller.DogController">
+        <constructor-arg ref="dogService"/>
+    </bean>
+
+    <bean name="dogService" class="voliy.samples.dog.service.DogService">
+        <constructor-arg ref="dogDao"/>
+    </bean>
+
     <bean name="dogDao" class="voliy.samples.dog.dao.DogDaoHibernate">
         <constructor-arg ref="sessionFactory"/>
     </bean>

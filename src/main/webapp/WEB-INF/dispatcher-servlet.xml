@@ -9,13 +9,5 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <bean name="dogController" class="voliy.samples.dog.controller.DogController">
-        <constructor-arg ref="dogService"/>
-    </bean>
-
-    <bean name="dogService" class="voliy.samples.dog.service.DogService">
-        <constructor-arg ref="dogDao"/>
-    </bean>
-
     <import resource="classpath:dao-context.xml"/>
 </beans>

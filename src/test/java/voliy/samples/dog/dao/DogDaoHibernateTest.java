@@ -14,7 +14,7 @@ import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
 
-@ContextConfiguration(locations = {"classpath:dao-context.xml"})
+@ContextConfiguration(locations = {"classpath:context.xml"})
 public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContextTests {
     @Autowired private DogDao dogDao;
     @Autowired private SessionFactory sessionFactory;
