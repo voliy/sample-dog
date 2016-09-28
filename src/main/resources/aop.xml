@@ -3,12 +3,12 @@
 
     <weaver>
         <!-- only weave classes in our application-specific packages -->
-        <include within="voliy.*"/>
+        <include within="foo.*"/>
     </weaver>
 
     <aspects>
         <!-- weave in just this aspect -->
-        <aspect name="voliy.samples.dog.aspect.ProfilingAspect"/>
+        <aspect name="foo.ProfilingAspect"/>
     </aspects>
 
 </aspectj>

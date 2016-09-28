@@ -1,4 +1,4 @@
-package voliy.samples.dog.aspect;
+package foo;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,11 +16,10 @@ public class ProfilingAspect {
             return pjp.proceed();
         } finally {
             sw.stop();
-            System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
             System.out.println(sw.prettyPrint());
         }
     }
 
-    @Pointcut("execution(public * voliy..*.*(..))")
+    @Pointcut("execution(public * foo..*.*(..))")
     public void methodsToBeProfiled(){}
 }
