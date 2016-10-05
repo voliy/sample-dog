@@ -18,16 +18,27 @@ public class SessionController {
         HttpSession session = attr.getRequest().getSession();
         String userKey = "user";
         if (session.getAttribute(userKey) == null) {
-            session.setAttribute(userKey, "test-" + (i++));
+            String user = String.format("User-%s", i++);
+            session.setAttribute(userKey, user);
         }
 
         SessionInfo sessionInfo = new SessionInfo();
-        sessionInfo.user = (String) session.getAttribute(userKey);
+        sessionInfo.setId(session.getId());
+        sessionInfo.setUser((String) session.getAttribute(userKey));
         return sessionInfo;
     }
 
     private static class SessionInfo {
+        private String id;
         private String user;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getUser() {
             return user;
