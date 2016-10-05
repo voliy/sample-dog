@@ -9,5 +9,5 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <import resource="classpath:dao-context.xml"/>
+    <import resource="classpath:context.xml"/>
 </beans>
