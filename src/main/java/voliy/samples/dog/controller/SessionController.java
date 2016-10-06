@@ -8,6 +8,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpSession;
 
+import static io.qala.datagen.RandomShortApi.alphanumeric;
+
 @RestController
 public class SessionController {
     private static int i = 1;
@@ -18,7 +20,7 @@ public class SessionController {
         HttpSession session = attr.getRequest().getSession();
         String userKey = "user";
         if (session.getAttribute(userKey) == null) {
-            String user = String.format("User-%s", i++);
+            String user = String.format("User-%s-%s", i++, alphanumeric(5));
             session.setAttribute(userKey, user);
         }
 
