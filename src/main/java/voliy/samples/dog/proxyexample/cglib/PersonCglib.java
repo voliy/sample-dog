@@ -1,6 +1,6 @@
-package voliy.samples.dog.proxyexample.jdk;
+package voliy.samples.dog.proxyexample.cglib;
 
-public class PersonImpl implements Person {
+public class PersonCglib {
     private String name;
     private int age;
 
@@ -20,8 +20,7 @@ public class PersonImpl implements Person {
         this.age = age;
     }
 
-    @Override
     public void test() {
-        System.out.println("JDK-based proxy sample");
+        System.out.println("CGLIB-based proxy sample");
     }
 }

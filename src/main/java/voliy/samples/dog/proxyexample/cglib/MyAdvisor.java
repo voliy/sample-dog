@@ -1,4 +1,4 @@
-package voliy.samples.dog.proxyexample.jdk;
+package voliy.samples.dog.proxyexample.cglib;
 
 import org.springframework.aop.MethodBeforeAdvice;
 
@@ -17,6 +17,6 @@ public class MyAdvisor implements MethodBeforeAdvice {
 
     @Override
     public void before(Method method, Object[] objects, Object o) throws Throwable {
-        System.out.println("JDK-based proxy sample before: " + someProperty);
+        System.out.println("CGLIB-based proxy sample before: " + someProperty);
     }
 }
