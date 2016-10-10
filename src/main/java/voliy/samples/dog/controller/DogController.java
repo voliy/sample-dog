@@ -2,6 +2,7 @@ package voliy.samples.dog.controller;
 
 import org.springframework.web.bind.annotation.*;
 import voliy.samples.dog.model.Dog;
+import voliy.samples.dog.proxyexample.Person;
 import voliy.samples.dog.service.DogService;
 
 import java.util.Collection;
@@ -12,6 +13,16 @@ public class DogController {
 
     DogController(DogService dogService) {
         this.dogService = dogService;
+    }
+
+    private Person person;
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/proxy")
+    public void proxy() {
+        person.test();
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/dog")
