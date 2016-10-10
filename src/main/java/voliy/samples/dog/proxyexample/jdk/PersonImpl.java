@@ -1,4 +1,4 @@
-package voliy.samples.dog.proxyexample;
+package voliy.samples.dog.proxyexample.jdk;
 
 public class PersonImpl implements Person {
     private String name;

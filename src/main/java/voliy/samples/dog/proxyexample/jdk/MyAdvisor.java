@@ -1,4 +1,4 @@
-package voliy.samples.dog.proxyexample;
+package voliy.samples.dog.proxyexample.jdk;
 
 import org.springframework.aop.MethodBeforeAdvice;
 

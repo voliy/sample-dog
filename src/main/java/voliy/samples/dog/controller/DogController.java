@@ -2,7 +2,7 @@ package voliy.samples.dog.controller;
 
 import org.springframework.web.bind.annotation.*;
 import voliy.samples.dog.model.Dog;
-import voliy.samples.dog.proxyexample.Person;
+import voliy.samples.dog.proxyexample.jdk.Person;
 import voliy.samples.dog.service.DogService;
 
 import java.util.Collection;

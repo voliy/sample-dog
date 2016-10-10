@@ -5,12 +5,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
-    <bean id="personTarget" class="voliy.samples.dog.proxyexample.PersonImpl">
+    <bean id="personTarget" class="voliy.samples.dog.proxyexample.jdk.PersonImpl">
         <property name="name" value="Tony"/>
         <property name="age" value="51"/>
     </bean>
 
-    <bean id="myAdvisor" class="voliy.samples.dog.proxyexample.MyAdvisor">
+    <bean id="myAdvisor" class="voliy.samples.dog.proxyexample.jdk.MyAdvisor">
         <property name="someProperty" value="Custom string property value"/>
     </bean>
 
@@ -18,7 +18,7 @@
     </bean>
 
     <bean id="person" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="proxyInterfaces" value="voliy.samples.dog.proxyexample.Person"/>
+        <property name="proxyInterfaces" value="voliy.samples.dog.proxyexample.jdk.Person"/>
 
         <property name="target" ref="personTarget"/>
         <property name="interceptorNames">
