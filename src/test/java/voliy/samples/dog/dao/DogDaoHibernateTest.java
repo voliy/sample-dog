@@ -7,9 +7,13 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.testng.annotations.Test;
 import voliy.samples.dog.model.Dog;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static io.qala.datagen.RandomShortApi.alphanumeric;
+import static io.qala.datagen.RandomShortApi.nullOrEmpty;
+import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
@@ -18,6 +22,30 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
 public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContextTests {
     @Autowired private DogDao dogDao;
     @Autowired private SessionFactory sessionFactory;
+
+    @Test public void savesDog_withNameSizeBetween1and100() {
+        Dog expected = Dog.random();
+        expected.setName(alphanumeric(1, 100));
+        expected = addDog(expected);
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
+        assertEquals(actual.getName(), expected.getName());
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void errorsWhenSavesDog_withNameSizeMoreThan100() {
+        Dog expected = Dog.random();
+        expected.setName(alphanumeric(101, 1000));
+        addDog(expected);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void errorsWhenSavesDog_withEmptyName() {
+        Dog expected = Dog.random();
+        expected.setName(nullOrEmpty());
+        addDog(expected);
+    }
 
     @Test public void savesAndLoadsDog() {
         Dog expected = addDog(Dog.random());

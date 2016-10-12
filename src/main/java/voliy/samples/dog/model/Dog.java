@@ -1,5 +1,7 @@
 package voliy.samples.dog.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZoneId;
@@ -11,7 +13,11 @@ import static io.qala.datagen.RandomShortApi.*;
 
 public class Dog {
     private Integer id;
+
+    @NotNull
+    @Size(min = 1, max = 100)
     private String name;
+
     private Date birthDate;
     private Double height;
     private Double weight;
