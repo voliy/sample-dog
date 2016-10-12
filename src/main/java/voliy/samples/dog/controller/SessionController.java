@@ -22,6 +22,13 @@ public class SessionController {
         return sessionInfo(session);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/session/invalidate")
+    public String invalidate(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "Session " + session.getId() + " is invalidated.";
+    }
+
     private void updateSession(HttpSession session, int port, Integer timeout, String value) {
         if (session.getAttribute("user") == null) {
             String user = String.format("Tomcat-%s___User-%s-%s", port, i++, alphanumeric(5));
