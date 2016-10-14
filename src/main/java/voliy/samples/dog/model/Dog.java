@@ -41,6 +41,12 @@ public class Dog {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Dog(id=%s, name=%s, birthDate=%s, height=%s, weight=%s)", this.getId(), this.getName(),
+                this.getBirthDate(), this.getHeight(), this.getWeight());
+    }
+
     public Integer getId() {
         return id;
     }

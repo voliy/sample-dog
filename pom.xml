@@ -16,6 +16,7 @@
         <maven.compiler.version>3.3</maven.compiler.version>
         <spring.version>4.3.2.RELEASE</spring.version>
         <hibernate.version>5.2.2.Final</hibernate.version>
+        <slf4j.version>1.7.21</slf4j.version>
         <rest-assured.version>2.9.0</rest-assured.version>
     </properties>
 
@@ -47,6 +48,14 @@
         <dependency>
             <groupId>io.qala.datagen</groupId>
             <artifactId>qala-datagen</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
         </dependency>
 
         <dependency>
@@ -114,6 +123,16 @@
                 <groupId>io.qala.datagen</groupId>
                 <artifactId>qala-datagen</artifactId>
                 <version>1.9.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>
