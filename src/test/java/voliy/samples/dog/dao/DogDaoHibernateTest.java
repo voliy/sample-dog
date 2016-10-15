@@ -11,8 +11,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static io.qala.datagen.RandomShortApi.alphanumeric;
-import static io.qala.datagen.RandomShortApi.nullOrEmpty;
+import static io.qala.datagen.RandomShortApi.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
@@ -22,30 +21,6 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
 public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContextTests {
     @Autowired private DogDao dogDao;
     @Autowired private SessionFactory sessionFactory;
-
-    @Test public void savesDog_withNameSizeBetween1and100() {
-        Dog expected = Dog.random();
-        expected.setName(alphanumeric(1, 100));
-        expected = addDog(expected);
-        flushAndClear();
-
-        Dog actual = getDog(expected.getId());
-        assertEquals(actual.getName(), expected.getName());
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void errorsWhenSavesDog_withNameSizeMoreThan100() {
-        Dog expected = Dog.random();
-        expected.setName(alphanumeric(101, 1000));
-        addDog(expected);
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void errorsWhenSavesDog_withEmptyName() {
-        Dog expected = Dog.random();
-        expected.setName(nullOrEmpty());
-        addDog(expected);
-    }
 
     @Test public void savesAndLoadsDog() {
         Dog expected = addDog(Dog.random());
@@ -88,6 +63,64 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
 
         Collection<Dog> allDogs = loadAllDogs();
         assertReflectionEquals(Arrays.asList(secondDog, firstDog), allDogs, LENIENT_ORDER);
+    }
+
+    @Test public void savesDog_withNameSizeBetween1and100() {
+        Dog expected = Dog.random();
+        expected.setName(alphanumeric(1, 100));
+        expected = addDog(expected);
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
+        assertEquals(actual.getName(), expected.getName());
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void errorsWhenSavesDog_withNameSizeMoreThan100() {
+        Dog expected = Dog.random();
+        expected.setName(alphanumeric(101, 1000));
+        addDog(expected);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void errorsWhenSavesDog_withEmptyName() {
+        Dog expected = Dog.random();
+        expected.setName(nullOrEmpty());
+        addDog(expected);
+    }
+
+    @Test public void savesDog_withPositiveHeight() {
+        Dog expected = Dog.random();
+        expected.setHeight(positiveDouble());
+        expected = addDog(expected);
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
+        assertEquals(actual.getHeight(), expected.getHeight());
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void errorsWhenSavesDog_withNullOrZeroHeight() {
+        Dog expected = Dog.random();
+        expected.setHeight(sample(0d, null));
+        addDog(expected);
+    }
+
+    @Test public void savesDog_withPositiveWeight() {
+        Dog expected = Dog.random();
+        expected.setWeight(positiveDouble());
+        expected = addDog(expected);
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
+        assertEquals(actual.getWeight(), expected.getWeight());
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void errorsWhenSavesDog_withNullOrZeroWeight() {
+        Dog expected = Dog.random();
+        expected.setWeight(sample(0d, null));
+        addDog(expected);
     }
 
     private Dog addDog(Dog dog) {

@@ -1,5 +1,6 @@
 package voliy.samples.dog.model;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -19,7 +20,13 @@ public class Dog {
     private String name;
 
     private Date birthDate;
+
+    @NotNull
+    @DecimalMin(value = "0", inclusive = false)
     private Double height;
+
+    @NotNull
+    @DecimalMin(value = "0", inclusive = false)
     private Double weight;
 
     public static final String[] names = {"Cooper", "Abby", "Lucky", "Oscar", "Angel"};
