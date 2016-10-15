@@ -5,57 +5,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
-    <bean id="personJdkTarget" class="voliy.samples.dog.proxyexample.jdk.PersonImpl">
-        <property name="name" value="Tony"/>
-        <property name="age" value="51"/>
-    </bean>
-
-    <bean id="myJdkAdvisor" class="voliy.samples.dog.proxyexample.jdk.MyAdvisor">
-        <property name="someProperty" value="JDK-based proxy sample: Custom string property value"/>
-    </bean>
-
-    <bean id="debugInterceptor" class="org.springframework.aop.interceptor.DebugInterceptor">
-    </bean>
-
-    <bean id="jdkPerson" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="proxyInterfaces" value="voliy.samples.dog.proxyexample.jdk.Person"/>
-
-        <property name="target" ref="personJdkTarget"/>
-        <property name="interceptorNames">
-            <list>
-                <value>myJdkAdvisor</value>
-                <value>debugInterceptor</value>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="personCglibTarget" class="voliy.samples.dog.proxyexample.cglib.PersonCglib">
-        <property name="name" value="Tony2"/>
-        <property name="age" value="52"/>
-    </bean>
-
-    <bean id="myCglibAdvisor" class="voliy.samples.dog.proxyexample.cglib.MyAdvisor">
-        <property name="someProperty" value="CGLIB-based proxy sample: Custom string property value"/>
-    </bean>
-
-    <bean id="cglibPerson" class="org.springframework.aop.framework.ProxyFactoryBean">
-        <property name="proxyTargetClass" value="true"/>
-
-        <property name="target" ref="personCglibTarget"/>
-        <property name="interceptorNames">
-            <list>
-                <value>myCglibAdvisor</value>
-                <value>debugInterceptor</value>
-            </list>
-        </property>
-    </bean>
-
-    <bean name="sessionController" class="voliy.samples.dog.controller.SessionController"/>
-
     <bean name="dogController" class="voliy.samples.dog.controller.DogController">
         <constructor-arg ref="dogService"/>
-        <property name="jdkPerson" ref="jdkPerson"/>
-        <property name="cglibPerson" ref="cglibPerson"/>
     </bean>
 
     <bean name="dogService" class="voliy.samples.dog.service.DogService">
