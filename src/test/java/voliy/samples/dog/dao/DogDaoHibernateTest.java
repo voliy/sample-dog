@@ -10,12 +10,15 @@ import voliy.samples.dog.model.Dog;
 import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
+import static io.qala.datagen.RandomShortApi.Long;
 import static io.qala.datagen.RandomShortApi.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
+import static voliy.samples.dog.model.Dog.TEN_YEARS_IN_MILLISECONDS;
 
 @ContextConfiguration(locations = {"classpath:context.xml"})
 public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContextTests {
@@ -83,10 +86,44 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void errorsWhenSavesDog_withEmptyName() {
+    public void errorsWhenSavesDog_withNullOrEmptyName() {
         Dog expected = Dog.random();
         expected.setName(nullOrEmpty());
         addDog(expected);
+    }
+
+    @Test public void savesDog_withBirthDateBeforeNow() {
+        Dog expected = Dog.random();
+        long nowTime = new Date().getTime();
+        expected.setBirthDate(new Date(nowTime - Long(0, TEN_YEARS_IN_MILLISECONDS)));
+        expected = addDog(expected);
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
+        assertEquals(actual.getBirthDate(), expected.getBirthDate());
+    }
+
+    @Test public void savesDog_withNullBirthDate() {
+        Dog expected = Dog.random();
+        expected.setBirthDate(null);
+        expected = addDog(expected);
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
+        assertEquals(actual.getBirthDate(), expected.getBirthDate());
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void errorsWhenSavesDog_withBirthDateAfterNow() {
+        Dog expected = Dog.random();
+        long nowTime = new Date().getTime();
+        long timeDelayInMilliseconds = 3000;
+        expected.setBirthDate(new Date(nowTime + Long(timeDelayInMilliseconds, TEN_YEARS_IN_MILLISECONDS)));
+        expected = addDog(expected);
+        flushAndClear();
+
+        Dog actual = getDog(expected.getId());
+        assertEquals(actual.getBirthDate(), expected.getBirthDate());
     }
 
     @Test public void savesDog_withPositiveHeight() {

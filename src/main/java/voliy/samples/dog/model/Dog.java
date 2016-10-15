@@ -2,6 +2,7 @@ package voliy.samples.dog.model;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.Month;
@@ -10,15 +11,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static io.qala.datagen.RandomShortApi.Long;
 import static io.qala.datagen.RandomShortApi.*;
 
 public class Dog {
+    public static final long TEN_YEARS_IN_MILLISECONDS = 315360000000L;
+
     private Integer id;
 
     @NotNull
     @Size(min = 1, max = 100)
     private String name;
 
+    @Past
     private Date birthDate;
 
     @NotNull
@@ -105,7 +110,8 @@ public class Dog {
     public static Dog random() {
         Dog dog = new Dog();
         dog.setName(alphanumeric(10));
-        dog.setBirthDate(new Date(positiveLong()));
+        long nowTime = new Date().getTime();
+        dog.setBirthDate(new Date(nowTime - Long(0, TEN_YEARS_IN_MILLISECONDS)));
         dog.setHeight(positiveDouble());
         dog.setWeight(positiveDouble());
         return dog;
