@@ -17,11 +17,14 @@
         <constructor-arg ref="sessionFactory"/>
     </bean>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:mem:foo;DB_CLOSE_DELAY=-1"/>
-        <property name="username" value="user"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="org.h2.Driver"/>
+        <property name="jdbcUrl" value="jdbc:h2:mem:foo;DB_CLOSE_DELAY=-1"/>
+        <property name="user" value="user"/>
         <property name="password" value="password"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="minPoolSize" value="5"/>
+        <property name="maxPoolSize" value="20"/>
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
@@ -42,12 +45,6 @@
                 <prop key="hibernate.show_sql">true</prop>
                 <!-- Drop and re-create the database schema on startup -->
                 <prop key="hibernate.hbm2ddl.auto">create</prop>
-                
-                <prop key="hibernate.c3p0.min_size">5</prop>
-                <prop key="hibernate.c3p0.max_size">20</prop>
-                <prop key="hibernate.c3p0.timeout">300</prop>
-                <prop key="hibernate.c3p0.max_statements">50</prop>
-                <prop key="hibernate.c3p0.idle_test_period">3000</prop>
             </props>
         </property>
         <property name="annotatedClasses">
