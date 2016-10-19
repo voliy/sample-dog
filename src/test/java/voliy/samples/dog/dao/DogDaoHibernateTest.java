@@ -12,13 +12,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-import static io.qala.datagen.RandomShortApi.Long;
 import static io.qala.datagen.RandomShortApi.*;
+import static io.qala.datagen.RandomValue.between;
 import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
-import static voliy.samples.dog.model.Dog.TEN_YEARS_IN_MILLISECONDS;
 
 @ContextConfiguration(locations = {"classpath:context.xml"})
 public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContextTests {
@@ -94,8 +93,7 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
 
     @Test public void savesDog_withBirthDateBeforeNow() {
         Dog expected = Dog.random();
-        long nowTime = new Date().getTime();
-        expected.setBirthDate(new Date(nowTime - Long(0, TEN_YEARS_IN_MILLISECONDS)));
+        expected.setBirthDate(between(Long.MIN_VALUE, new Date().getTime()).date());
         expected = addDog(expected);
         flushAndClear();
 
@@ -116,9 +114,7 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void errorsWhenSavesDog_withBirthDateAfterNow() {
         Dog expected = Dog.random();
-        long nowTime = new Date().getTime();
-        long timeDelayInMilliseconds = 3000;
-        expected.setBirthDate(new Date(nowTime + Long(timeDelayInMilliseconds, TEN_YEARS_IN_MILLISECONDS)));
+        expected.setBirthDate(between(new Date().getTime() + 3000, Long.MAX_VALUE).date());
         expected = addDog(expected);
         flushAndClear();
 

@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static io.qala.datagen.RandomShortApi.Long;
-import static io.qala.datagen.RandomShortApi.*;
+import static io.qala.datagen.RandomShortApi.alphanumeric;
+import static io.qala.datagen.RandomShortApi.positiveDouble;
+import static io.qala.datagen.RandomValue.between;
 
 public class Dog {
-    public static final long TEN_YEARS_IN_MILLISECONDS = 315360000000L;
-
     private Integer id;
 
     @NotNull
@@ -110,8 +109,7 @@ public class Dog {
     public static Dog random() {
         Dog dog = new Dog();
         dog.setName(alphanumeric(10));
-        long nowTime = new Date().getTime();
-        dog.setBirthDate(new Date(nowTime - Long(0, TEN_YEARS_IN_MILLISECONDS)));
+        dog.setBirthDate(between(Long.MIN_VALUE, new Date().getTime()).date());
         dog.setHeight(positiveDouble());
         dog.setWeight(positiveDouble());
         return dog;
