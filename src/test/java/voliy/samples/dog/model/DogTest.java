@@ -35,7 +35,7 @@ public class DogTest {
         dog.setName(alphanumeric(101, 1000));
         Set<ConstraintViolation<Dog>> violations = validator.validate(dog);
         assertEquals(violations.size(), 1);
-        assertEquals("Dog name size must be between 1 and 100", violations.iterator().next().getMessage());
+        assertEquals(violations.iterator().next().getMessage(), "Dog name size must be between 1 and 100");
     }
 
     @Test public void errorsWhenValidatesDog_withNullOrEmptyName() {
