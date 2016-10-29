@@ -27,10 +27,10 @@ import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDE
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class DogControllerMockTest extends AbstractTestNGSpringContextTests {
     private static final String BASE_URL = "/dog";
-    private ObjectMapper objectMapper;
+    private static ObjectMapper objectMapper;
     @Autowired private DogController dogController;
 
-    @BeforeClass private void init() {
+    @BeforeClass private static void init() {
         objectMapper = new ObjectMapper();
     }
 

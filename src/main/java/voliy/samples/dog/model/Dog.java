@@ -19,7 +19,7 @@ public class Dog {
     private Integer id;
 
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 100, message = "Dog name size must be between {min} and {max}")
     private String name;
 
     @Past

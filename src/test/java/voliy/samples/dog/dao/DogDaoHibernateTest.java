@@ -10,10 +10,8 @@ import voliy.samples.dog.model.Dog;
 import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 
-import static io.qala.datagen.RandomShortApi.*;
-import static io.qala.datagen.RandomValue.between;
+import static io.qala.datagen.RandomShortApi.alphanumeric;
 import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
@@ -67,9 +65,9 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
         assertReflectionEquals(Arrays.asList(secondDog, firstDog), allDogs, LENIENT_ORDER);
     }
 
-    @Test public void savesDog_withNameSizeBetween1and100() {
+    @Test public void savesDog_withNameSizeEqualTo100() {
         Dog expected = Dog.random();
-        expected.setName(alphanumeric(1, 100));
+        expected.setName(alphanumeric(100));
         expected = addDog(expected);
         flushAndClear();
 
@@ -81,78 +79,6 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
     public void errorsWhenSavesDog_withNameSizeMoreThan100() {
         Dog expected = Dog.random();
         expected.setName(alphanumeric(101, 1000));
-        addDog(expected);
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void errorsWhenSavesDog_withNullOrEmptyName() {
-        Dog expected = Dog.random();
-        expected.setName(nullOrEmpty());
-        addDog(expected);
-    }
-
-    @Test public void savesDog_withBirthDateBeforeNow() {
-        Dog expected = Dog.random();
-        expected.setBirthDate(between(Long.MIN_VALUE, new Date().getTime()).date());
-        expected = addDog(expected);
-        flushAndClear();
-
-        Dog actual = getDog(expected.getId());
-        assertEquals(actual.getBirthDate(), expected.getBirthDate());
-    }
-
-    @Test public void savesDog_withNullBirthDate() {
-        Dog expected = Dog.random();
-        expected.setBirthDate(null);
-        expected = addDog(expected);
-        flushAndClear();
-
-        Dog actual = getDog(expected.getId());
-        assertEquals(actual.getBirthDate(), expected.getBirthDate());
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void errorsWhenSavesDog_withBirthDateAfterNow() {
-        Dog expected = Dog.random();
-        expected.setBirthDate(between(new Date().getTime() + 3000, Long.MAX_VALUE).date());
-        expected = addDog(expected);
-        flushAndClear();
-
-        Dog actual = getDog(expected.getId());
-        assertEquals(actual.getBirthDate(), expected.getBirthDate());
-    }
-
-    @Test public void savesDog_withPositiveHeight() {
-        Dog expected = Dog.random();
-        expected.setHeight(positiveDouble());
-        expected = addDog(expected);
-        flushAndClear();
-
-        Dog actual = getDog(expected.getId());
-        assertEquals(actual.getHeight(), expected.getHeight());
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void errorsWhenSavesDog_withNullOrZeroHeight() {
-        Dog expected = Dog.random();
-        expected.setHeight(sample(0d, null));
-        addDog(expected);
-    }
-
-    @Test public void savesDog_withPositiveWeight() {
-        Dog expected = Dog.random();
-        expected.setWeight(positiveDouble());
-        expected = addDog(expected);
-        flushAndClear();
-
-        Dog actual = getDog(expected.getId());
-        assertEquals(actual.getWeight(), expected.getWeight());
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void errorsWhenSavesDog_withNullOrZeroWeight() {
-        Dog expected = Dog.random();
-        expected.setWeight(sample(0d, null));
         addDog(expected);
     }
 
