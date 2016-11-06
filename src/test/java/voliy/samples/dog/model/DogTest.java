@@ -9,6 +9,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.qala.datagen.RandomShortApi.*;
 import static io.qala.datagen.RandomValue.between;
@@ -40,9 +41,10 @@ public class DogTest {
 
     @Test public void errorsWhenValidatesDog_withNullOrEmptyName() {
         Dog dog = Dog.random();
-        dog.setName(nullOrEmpty());
+        dog.setName(nullOrBlank());
         Set<ConstraintViolation<Dog>> violations = validator.validate(dog);
-        assertEquals(violations.size(), 1);
+        Set<String> messages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
+        assertTrue(messages.contains("may not be empty"));
     }
 
     @Test public void successfullyValidatesDog_withBirthDateBeforeNow() {
@@ -75,7 +77,7 @@ public class DogTest {
 
     @Test public void errorsWhenValidatesDog_withNullOrZeroHeight() {
         Dog dog = Dog.random();
-        dog.setHeight(sample(0d, null));
+        dog.setHeight(nullOr(0d));
         Set<ConstraintViolation<Dog>> violations = validator.validate(dog);
         assertEquals(violations.size(), 1);
     }

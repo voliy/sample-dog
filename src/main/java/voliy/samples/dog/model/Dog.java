@@ -1,5 +1,7 @@
 package voliy.samples.dog.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -18,7 +20,7 @@ import static io.qala.datagen.RandomValue.between;
 public class Dog {
     private Integer id;
 
-    @NotNull
+    @NotBlank
     @Size(min = 1, max = 100, message = "Dog name size must be between {min} and {max}")
     private String name;
 
@@ -108,7 +110,7 @@ public class Dog {
 
     public static Dog random() {
         Dog dog = new Dog();
-        dog.setName(alphanumeric(10));
+        dog.setName(alphanumeric(1, 100));
         dog.setBirthDate(between(Long.MIN_VALUE, new Date().getTime()).date());
         dog.setHeight(positiveDouble());
         dog.setWeight(positiveDouble());
