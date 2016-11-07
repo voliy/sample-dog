@@ -24,27 +24,39 @@ public class DogTest {
         validator = factory.getValidator();
     }
 
-    @Test public void successfullyValidatesDog_withNameSizeBetween1and100() {
+    @Test public void successfullyValidatesDog() {
+        assertTrue(validator.validate(Dog.random()).isEmpty());
+    }
+
+    @Test public void successfullyValidatesDog_withNameSizeEqualTo1() {
         Dog dog = Dog.random();
-        dog.setName(alphanumeric(1, 100));
-        Set<ConstraintViolation<Dog>> violations = validator.validate(dog);
-        assertTrue(violations.isEmpty());
+        dog.setName(alphanumeric(1));
+        assertTrue(validator.validate(dog).isEmpty());
+    }
+
+    @Test public void successfullyValidatesDog_withNameSizeEqualTo100() {
+        Dog dog = Dog.random();
+        dog.setName(alphanumeric(100));
+        assertTrue(validator.validate(dog).isEmpty());
+    }
+
+    @Test public void errorsWhenValidatesDog_withNameSizeEqualTo101() {
+        Dog dog = Dog.random();
+        dog.setName(alphanumeric(101));
+        assertHasViolation(validator.validate(dog), "Dog name size must be between 1 and 100");
     }
 
     @Test public void errorsWhenValidatesDog_withNameSizeMoreThan100() {
         Dog dog = Dog.random();
+//        dog.setName(alphanumeric(101, Integer.MAX_VALUE)); todo: takes long time
         dog.setName(alphanumeric(101, 1000));
-        Set<ConstraintViolation<Dog>> violations = validator.validate(dog);
-        assertEquals(violations.size(), 1);
-        assertEquals(violations.iterator().next().getMessage(), "Dog name size must be between 1 and 100");
+        assertHasViolation(validator.validate(dog), "Dog name size must be between 1 and 100");
     }
 
     @Test public void errorsWhenValidatesDog_withNullOrEmptyName() {
         Dog dog = Dog.random();
         dog.setName(nullOrBlank());
-        Set<ConstraintViolation<Dog>> violations = validator.validate(dog);
-        Set<String> messages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
-        assertTrue(messages.contains("may not be empty"));
+        assertHasViolation(validator.validate(dog), "may not be empty");
     }
 
     @Test public void successfullyValidatesDog_withBirthDateBeforeNow() {
@@ -94,5 +106,10 @@ public class DogTest {
         dog.setWeight(sample(0d, null));
         Set<ConstraintViolation<Dog>> violations = validator.validate(dog);
         assertEquals(violations.size(), 1);
+    }
+
+    private static void assertHasViolation(Set<ConstraintViolation<Dog>> violations, String message) {
+        Set<String> messages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
+        assertTrue(messages.contains(message));
     }
 }
