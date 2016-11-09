@@ -3,6 +3,7 @@ package voliy.samples.dog.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -10,6 +11,7 @@ import voliy.samples.dog.model.Dog;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.when;
+import static io.qala.datagen.RandomShortApi.alphanumeric;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
@@ -49,6 +51,13 @@ public class DogControllerITCase {
         deleteDog(dogId);
         dog = getDog(dogId);
         assertNull(dog);
+    }
+
+    @Test public void errorsWhenSavesDog_withNotValidFields() throws Exception {
+        Dog dog = Dog.random();
+        dog.setName(alphanumeric(101));
+        given().contentType(ContentType.JSON).body(objectMapper.writeValueAsBytes(dog)).when().post(BASE_URL)
+                .then().statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     private Dog addDog(Dog dog) throws Exception {
