@@ -36,29 +36,24 @@ public class DogControllerMockTest extends AbstractTestNGSpringContextTests {
 
     @Test public void savesAndLoadsDog() throws Exception {
         Dog expected = addDog(Dog.random());
-
         Dog actual = getDog(expected.getId());
         assertReflectionEquals(expected, actual);
     }
 
     @Test public void addsDogAndUpdatesItsFields() throws Exception {
         Dog dog = addDog(Dog.random());
-
         int dogId = dog.getId();
         Dog expected = Dog.random();
         expected.setId(dogId);
         updateDog(expected);
-
         Dog actual = getDog(dogId);
         assertReflectionEquals(expected, actual);
     }
 
     @Test public void savesAndDeletesDog() throws Exception {
         Dog dog = addDog(Dog.random());
-
         int dogId = dog.getId();
         deleteDog(dogId);
-
         dog = getDog(dogId);
         assertNull(dog);
     }
@@ -66,7 +61,6 @@ public class DogControllerMockTest extends AbstractTestNGSpringContextTests {
     @Test public void addsDogsAndLoadsAllOfThem() throws Exception {
         Dog firstDog = addDog(Dog.random());
         Dog secondDog = addDog(Dog.random());
-
         List<Dog> allDogs = loadAllDogs();
         assertNotNull(allDogs);
         assertEquals(2, allDogs.size());
