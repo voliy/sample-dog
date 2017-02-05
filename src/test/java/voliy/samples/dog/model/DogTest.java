@@ -48,7 +48,6 @@ public class DogTest {
 
     @Test public void errorsWhenValidatesDog_withNameSizeMoreThan100() {
         Dog dog = Dog.random();
-//        dog.setName(alphanumeric(101, Integer.MAX_VALUE)); todo: takes long time
         dog.setName(alphanumeric(101, 1000));
         assertHasViolation(validator.validate(dog), "Dog name size must be between 1 and 100");
     }

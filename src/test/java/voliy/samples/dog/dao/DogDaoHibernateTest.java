@@ -8,14 +8,14 @@ import org.testng.annotations.Test;
 import voliy.samples.dog.model.Dog;
 
 import javax.validation.ConstraintViolationException;
-import java.util.Arrays;
 import java.util.Collection;
 
 import static io.qala.datagen.RandomShortApi.alphanumeric;
 import static org.testng.Assert.assertEquals;
+import static org.testng.AssertJUnit.assertNotNull;
 import static org.testng.AssertJUnit.assertNull;
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_ORDER;
+import static voliy.samples.dog.utils.TestUtils.assertContainsDog;
 
 @ContextConfiguration(locations = {"classpath:context.xml"})
 public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContextTests {
@@ -62,7 +62,9 @@ public class DogDaoHibernateTest extends AbstractTransactionalTestNGSpringContex
         flushAndClear();
 
         Collection<Dog> allDogs = loadAllDogs();
-        assertReflectionEquals(Arrays.asList(secondDog, firstDog), allDogs, LENIENT_ORDER);
+        assertNotNull(allDogs);
+        assertContainsDog(allDogs, firstDog);
+        assertContainsDog(allDogs, secondDog);
     }
 
     @Test public void savesDog_withNameSizeEqualTo100() {
